@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Translation Order Form</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 40px; max-width: 700px; }
+    label { font-weight: bold; display: block; margin-top: 20px; }
+    input, textarea, select { width: 100%; padding: 10px; margin-top: 5px; }
+    .total-box { font-size: 22px; margin-top: 30px; font-weight: bold; }
+    .button-pay {
+        background: #1a73e8;
+        color: white;
+        padding: 15px;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Translation Order Form</h2>
+
+<form id="translationForm">
+
+<label>Source Language</label>
+<input type="text" id="sourceLanguage" required>
+
+<label>Target Language</label>
+<input type="text" id="targetLanguage" required>
+
+<label>Additional Target Language (Optional)</label>
+<input type="text" id="additionalTarget">
+
+<label>Total Number Of Pages Needing Translation</label>
+<input type="number" id="pages" min="1" required>
+
+<label>Are your translations for USCIS or US immigration purposes?</label>
+<select id="uscis">
+    <option>No</option>
+    <option>Yes</option>
+</select>
+
+<label>Do you need your translation notarized?</label>
+<select id="notarized">
+    <option>No</option>
+    <option>Yes</option>
+</select>
+
+<label>Do you need rush service?</label>
+<select id="rush">
+    <option>No</option>
+    <option>Yes</option>
+</select>
+
+<label>Deadline Confirmation</label>
+<select id="deadline" required>
+    <option value="">— Select —</option>
+    <option>I confirm I placed my order before the cutoff OR selected rush</option>
+</select>
+
+<label>Special Comments</label>
+<textarea id="comments" rows="5"></textarea>
+
+<div class="total-box">
+    Total Amount Due: $<span id="total">0</span>
+</div>
+
+<button type="button" class="button-pay" onclick="goToPayment()">
+    Proceed to Payment
+</button>
+
+</form>
+
+<script>
+function calculateTotal() {
+    let pages = parseInt(document.getElementById("pages").value) || 0;
+    let rush = document.getElementById("rush").value;
+    let notarized = document.getElementById("notarized").value;
+
+    if (pages < 1) {
+        document.getElementById("total").innerText = "0";
+        return;
+    }
+
+    // BASE PRICE
+    let base = 75; // first page
+    if (pages > 1) {
+        base += (pages - 1) * 50;
+    }
+
+    // NOTARIZATION +$75
+    if (notarized === "Yes") {
+        base += 75;
+    }
+
+    // RUSH +50%
+    if (rush === "Yes") {
+        base *= 1.5;
+    }
+
+    // STRIPE FEES (2.9% + $0.30)
+    let withFees = base * 1.029 + 0.30;
+
+    // ROUND UP TO NEXT WHOLE DOLLAR
+    let finalTotal = Math.ceil(withFees);
+
+    document.getElementById("total").innerText = finalTotal;
+    return finalTotal;
+}
+
+// Recalculate when inputs change
+document.querySelectorAll("input, select").forEach(el => {
+    el.addEventListener("input", calculateTotal);
+    el.addEventListener("change", calculateTotal);
+});
+
+// PAYMENT REDIRECT
+function goToPayment() {
+    let total = calculateTotal();
+    if (!total || total < 1) {
+        alert("Please enter a valid page count.");
+        return;
+    }
+
+    // REDIRECT TO STRIPE CHECKOUT (Manual Capture Session)
+    window.location.href = "https://your-manual-capture-checkout-link-here";
+}
+</script>
+
+</body>
+</html>
