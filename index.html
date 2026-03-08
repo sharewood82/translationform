@@ -1,271 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Translation Order Form</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --navy:#2C3A59;
-    --gold:#C7A245;
-    --bg:#F6F7FB;
-    --card:#FFFFFF;
-    --text:#2C3A59;
-    --muted:#5A6475;
-    --line:#E5E7EF;
-    --field:#FAFBFF;
-  }
-
-  *{ box-sizing:border-box; }
-
-  body{
-    margin:0;
-    background:var(--bg);
-    font-family:'Lato',sans-serif;
-    color:var(--text);
-  }
-
-  .wrap{
-    max-width:760px;
-    margin:48px auto;
-    padding:0 18px;
-  }
-
-  .card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:18px;
-    box-shadow:0 14px 40px rgba(44,58,89,.10);
-    overflow:hidden;
-  }
-
-  .header{
-    padding:28px 28px 16px;
-    border-bottom:1px solid var(--line);
-    background:linear-gradient(180deg, rgba(199,162,69,.10), rgba(255,255,255,0));
-  }
-
-  h1{
-    margin:0;
-    font-family:'Playfair Display',serif;
-    font-size:34px;
-    line-height:1.15;
-    color:var(--navy);
-  }
-
-  .sub{
-    margin:10px 0 0;
-    color:var(--muted);
-    font-size:15px;
-  }
-
-  form{
-    padding:22px 28px 28px;
-  }
-
-  .grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:14px;
-  }
-
-  @media(min-width:720px){
-    .grid.two{ grid-template-columns:1fr 1fr; }
-  }
-
-  label{
-    display:block;
-    font-weight:700;
-    font-size:14px;
-    margin:0 0 6px;
-    color:var(--navy);
-  }
-
-  .field input,
-  .field select,
-  .field textarea{
-    width:100%;
-    padding:12px 12px;
-    border:1px solid var(--line);
-    border-radius:10px;
-    background:var(--field);
-    font-size:15px;
-    color:var(--text);
-    outline:none;
-    transition:.15s ease;
-  }
-
-  .field textarea{ resize:vertical; min-height:110px; }
-
-  .field input:focus,
-  .field select:focus,
-  .field textarea:focus{
-    border-color:rgba(199,162,69,.9);
-    box-shadow:0 0 0 3px rgba(199,162,69,.18);
-    background:#fff;
-  }
-
-  .divider{
-    margin:18px 0;
-    height:1px;
-    background:var(--line);
-  }
-
-  .total{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    padding:14px 16px;
-    border:1px solid rgba(199,162,69,.35);
-    background:rgba(199,162,69,.10);
-    border-radius:12px;
-    font-size:16px;
-  }
-
-  .total strong{
-    font-size:22px;
-    color:var(--navy);
-  }
-
-  .actions{
-    margin-top:16px;
-    display:grid;
-    gap:10px;
-  }
-
-  .btn{
-    border:none;
-    width:100%;
-    padding:14px 16px;
-    border-radius:12px;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    transition:.18s ease;
-  }
-
-  .btn-primary{
-    background:var(--navy);
-    color:#fff;
-  }
-  .btn-primary:hover{
-    background:var(--gold);
-    color:#1b2438;
-  }
-
-  .note{
-    margin-top:10px;
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.4;
-  }
-</style>
-</head>
-
-<body>
-  <div class="wrap">
-    <div class="card">
-      <div class="header">
-        <h1>Translation Order Form</h1>
-        <p class="sub">Pricing is calculated automatically. Notarization adds $75. Rush adds 50%.</p>
-      </div>
-
-      <form id="translationForm">
-        <div class="grid two">
-          <div class="field">
-            <label for="sourceLanguage">Source Language</label>
-            <input type="text" id="sourceLanguage" required>
-          </div>
-
-          <div class="field">
-            <label for="targetLanguage">Target Language</label>
-            <input type="text" id="targetLanguage" required>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="field">
-            <label for="additionalTarget">Additional Target Language (Optional)</label>
-            <input type="text" id="additionalTarget">
-          </div>
-        </div>
-
-        <div class="grid two">
-          <div class="field">
-            <label for="pages">Total Number Of Pages Needing Translation</label>
-            <input type="number" id="pages" min="1" required>
-          </div>
-
-          <div class="field">
-            <label for="uscis">USCIS / US immigration purpose?</label>
-            <select id="uscis">
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid two">
-          <div class="field">
-            <label for="notarized">Need translation notarized?</label>
-            <select id="notarized">
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="rush">Need rush service?</label>
-            <select id="rush">
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="field">
-            <label for="deadline">Deadline Confirmation</label>
-            <select id="deadline" required>
-              <option value="">— Select —</option>
-              <option>I confirm I placed my order before the cutoff OR selected rush</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="field">
-            <label for="comments">Special Comments</label>
-            <textarea id="comments" rows="5"></textarea>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="total" aria-live="polite">
-          <span>Total Amount Due</span>
-          <strong>$<span id="total">0</span></strong>
-        </div>
-
-        <div class="actions">
-          <button type="button" class="btn btn-primary" onclick="goToPayment()">
-            Proceed to Payment
-          </button>
-        </div>
-
-        <div class="note">
-          After payment, you’ll receive a confirmation email. If you need an adjustment, we’ll contact you before work begins.
-        </div>
-      </form>
-    </div>
-  </div>
-
 <script>
-  const STRIPE_LINK = "https://buy.stripe.com/cN2eXCfM5b5a6Ig8ww"; // <-- PUT YOUR STRIPE LINK HERE
+  const STRIPE_LINK = "https://buy.stripe.com/cN2eXCfM5b5a6Ig8ww";
 
   function calculateTotal() {
     const pages = parseInt(document.getElementById("pages").value, 10) || 0;
@@ -278,7 +12,7 @@
     }
 
     // BASE PRICE
-    let base = 75; // first page
+    let base = 75;
     if (pages > 1) base += (pages - 1) * 50;
 
     // NOTARIZATION +$75
@@ -287,10 +21,9 @@
     // RUSH +50%
     if (rush === "Yes") base *= 1.5;
 
-    // STRIPE FEES (2.9% + $0.30)
+    // STRIPE FEES
     const withFees = base * 1.029 + 0.30;
 
-    // ROUND UP TO NEXT WHOLE DOLLAR
     const finalTotal = Math.ceil(withFees);
 
     document.getElementById("total").innerText = finalTotal;
@@ -307,15 +40,9 @@
     if (!total || total < 1) return alert("Please enter a valid page count.");
     if (!document.getElementById("deadline").value) return alert("Please confirm the deadline selection.");
 
-    if (!STRIPE_LINK || STRIPE_LINK.includes("PASTE_YOUR_STRIPE_LINK_HERE")) {
-      return alert("Stripe link not set yet. Paste your Stripe link into the STRIPE_LINK variable in the code.");
+    if (!STRIPE_LINK) {
+      return alert("Stripe link not set.");
     }
 
-    // Redirect to Stripe
     window.location.href = STRIPE_LINK;
   }
-</script>
-
-</body>
-</html>
-
