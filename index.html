@@ -245,19 +245,6 @@
           </div>
         </div>
 
-        <div class="grid">
-          <div class="field">
-            <label for="additionalTarget">Additional Target Language (Optional)</label>
-            <input type="text" id="additionalTarget">
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="info-box">
-            Per-page rates are based on a maximum of 225 words per page. If your document exceeds that, an extra fee will be applied.
-          </div>
-        </div>
-
         <div class="grid two">
           <div class="field">
             <label for="pages">Total Number Of Pages Needing Translation</label>
@@ -345,7 +332,7 @@
 
         <div class="grid">
           <div class="info-box">
-            <strong>Turnaround Guidance:</strong> Business-day timing begins on the next working day after your order is placed. Most projects follow this general schedule: 1 to 4 pages are typically completed in 1 to 2 working days, 5 to 8 pages in 2 to 3 working days, 9 to 12 pages in 3 to 4 working days, and 13 to 16 pages in 4 to 5 working days. For projects over 16 pages, we will email you to confirm the estimated completion time.
+            <strong>Turnaround Guidance:</strong> Our turnaround estimates begin on the next business day after your order is placed. In most cases, jobs between 1 and 4 pages are completed within 1 to 2 working days, 5 to 8 pages within 2 to 3 working days, 9 to 12 pages within 3 to 4 working days, and 13 to 16 pages within 4 to 5 working days. For larger projects over 16 pages, we will review the request and follow up by email with an estimated completion timeline.
           </div>
         </div>
 
@@ -353,6 +340,12 @@
           <div class="field">
             <label for="comments">Special Comments</label>
             <textarea id="comments" rows="5"></textarea>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="info-box">
+            <strong>Note:</strong> Pricing assumes a maximum of 225 words per page. If a page contains more than 225 words, additional translation fees may apply.
           </div>
         </div>
 
@@ -400,11 +393,11 @@
   }
 
   function getPageBasedTurnaround(pages) {
-    if (pages >= 1 && pages <= 4) return "Estimated turnaround time: 1 – 2 working days.";
-    if (pages >= 5 && pages <= 8) return "Estimated turnaround time: 2 – 3 working days.";
-    if (pages >= 9 && pages <= 12) return "Estimated turnaround time: 3 – 4 working days.";
-    if (pages >= 13 && pages <= 16) return "Estimated turnaround time: 4 – 5 working days.";
-    if (pages >= 17) return "Estimated turnaround time: We will contact you via email to confirm.";
+    if (pages >= 1 && pages <= 4) return "Estimated turnaround time: 1–2 working days.";
+    if (pages >= 5 && pages <= 8) return "Estimated turnaround time: 2–3 working days.";
+    if (pages >= 9 && pages <= 12) return "Estimated turnaround time: 3–4 working days.";
+    if (pages >= 13 && pages <= 16) return "Estimated turnaround time: 4–5 working days.";
+    if (pages >= 17) return "Estimated turnaround time: We will contact you by email to confirm.";
     return "";
   }
 
