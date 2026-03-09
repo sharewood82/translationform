@@ -22,6 +22,8 @@
     --warn-line:#E9D39A;
     --zelle:#6C1CD1;
     --zelle-hover:#5316a8;
+    --ok-bg:#eef6ff;
+    --ok-line:#c8dbf7;
   }
 
   *{ box-sizing:border-box; }
@@ -33,13 +35,15 @@
     color:var(--text);
   }
 
-  .wrap{
+  .wrap,
+  .zelle-page{
     max-width:760px;
     margin:48px auto;
     padding:0 18px;
   }
 
-  .card{
+  .card,
+  .zelle-card{
     background:var(--card);
     border:1px solid var(--line);
     border-radius:18px;
@@ -47,14 +51,16 @@
     overflow:hidden;
   }
 
-  .branding{
+  .branding,
+  .zelle-header{
     text-align:center;
     padding:28px 24px 16px;
     background:linear-gradient(180deg, rgba(199,162,69,.10), rgba(255,255,255,0));
     border-bottom:1px solid var(--line);
   }
 
-  .branding h1{
+  .branding h1,
+  .zelle-header h2{
     margin:0;
     font-family:'Playfair Display',serif;
     font-size:30px;
@@ -128,7 +134,8 @@
   .info-box,
   .turnaround,
   .payment-message,
-  .warning-message{
+  .warning-message,
+  .status-message{
     padding:14px 16px;
     border-radius:12px;
     font-size:14px;
@@ -160,6 +167,13 @@
     background:var(--warn-bg);
     color:var(--navy);
     display:none;
+  }
+
+  .status-message{
+    display:none;
+    border:1px solid var(--ok-line);
+    background:var(--ok-bg);
+    color:var(--navy);
   }
 
   .divider{
@@ -235,24 +249,10 @@
 
   .zelle-page{
     display:none;
-    max-width:760px;
-    margin:48px auto;
-    padding:0 18px;
-  }
-
-  .zelle-card{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:18px;
-    box-shadow:0 14px 40px rgba(44,58,89,.10);
-    overflow:hidden;
   }
 
   .zelle-header{
-    text-align:center;
-    padding:28px 24px 18px;
     background:linear-gradient(180deg, rgba(108,28,209,.08), rgba(255,255,255,0));
-    border-bottom:1px solid var(--line);
   }
 
   .zelle-header img{
@@ -261,18 +261,16 @@
     margin-bottom:14px;
   }
 
-  .zelle-header h2{
-    margin:0;
-    font-family:'Playfair Display',serif;
-    font-size:28px;
-    line-height:1.2;
-    color:var(--navy);
-    font-weight:600;
-  }
-
   .zelle-content{
     padding:26px 28px 30px;
     text-align:center;
+  }
+
+  .zelle-cta{
+    margin:18px 0 8px;
+    font-size:28px;
+    font-weight:800;
+    color:var(--navy);
   }
 
   .zelle-email{
@@ -281,13 +279,6 @@
     font-weight:800;
     color:var(--navy);
     word-break:break-word;
-  }
-
-  .zelle-cta{
-    margin:18px 0 8px;
-    font-size:28px;
-    font-weight:800;
-    color:var(--navy);
   }
 
   .zelle-amount{
@@ -317,8 +308,8 @@
     margin-top:14px;
     padding:12px 14px;
     border-radius:10px;
-    background:#eef6ff;
-    border:1px solid #c8dbf7;
+    background:var(--ok-bg);
+    border:1px solid var(--ok-line);
     color:var(--navy);
     font-size:14px;
   }
@@ -336,25 +327,25 @@
       <form id="translationForm">
         <div class="grid two">
           <div class="field">
-            <label for="sourceLanguage">Source Language</label>
-            <input type="text" id="sourceLanguage" required>
+            <label for="customerName">Full Name</label>
+            <input type="text" id="customerName" name="Full Name" required>
           </div>
 
           <div class="field">
-            <label for="targetLanguage">Target Language</label>
-            <input type="text" id="targetLanguage" required>
+            <label for="customerEmail">Email Address</label>
+            <input type="email" id="customerEmail" name="Email Address" required>
           </div>
         </div>
 
         <div class="grid two">
           <div class="field">
-            <label for="pages">Total Number Of Pages Needing Translation</label>
-            <input type="number" id="pages" min="1" required>
+            <label for="customerPhone">Phone Number</label>
+            <input type="tel" id="customerPhone" name="Phone Number">
           </div>
 
           <div class="field">
             <label for="uscis">USCIS / US immigration purpose?</label>
-            <select id="uscis">
+            <select id="uscis" name="USCIS / US immigration purpose?">
               <option>No</option>
               <option>Yes</option>
             </select>
@@ -363,8 +354,25 @@
 
         <div class="grid two">
           <div class="field">
+            <label for="sourceLanguage">Source Language</label>
+            <input type="text" id="sourceLanguage" name="Source Language" required>
+          </div>
+
+          <div class="field">
+            <label for="targetLanguage">Target Language</label>
+            <input type="text" id="targetLanguage" name="Target Language" required>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="field">
+            <label for="pages">Total Number Of Pages Needing Translation</label>
+            <input type="number" id="pages" name="Total Number Of Pages Needing Translation" min="1" required>
+          </div>
+
+          <div class="field">
             <label for="aitaCertified">Does the document need to be translated by an AITA-certified translator?</label>
-            <select id="aitaCertified">
+            <select id="aitaCertified" name="AITA-Certified Translator Required?">
               <option>No</option>
               <option>Yes</option>
             </select>
@@ -372,47 +380,49 @@
               Non-AITA service is only available for English to Spanish and Spanish to English translations.
             </div>
           </div>
-
-          <div class="field">
-            <label for="swornTranslation">Do you need sworn translation services?</label>
-            <select id="swornTranslation">
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </div>
         </div>
 
         <div class="grid two">
           <div class="field">
+            <label for="swornTranslation">Do you need sworn translation services?</label>
+            <select id="swornTranslation" name="Sworn Translation Needed?">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+
+          <div class="field">
             <label for="apostille">Do you need your translation apostilled?</label>
-            <select id="apostille">
+            <select id="apostille" name="Translation Apostilled?">
               <option>No</option>
               <option>Yes</option>
               <option>Both</option>
             </select>
           </div>
+        </div>
 
+        <div class="grid two">
           <div class="field">
             <label for="notarized">Need translation notarized?</label>
-            <select id="notarized">
+            <select id="notarized" name="Translation Notarized?">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="rush">Need rush service?</label>
+            <select id="rush" name="Rush Service?">
               <option>No</option>
               <option>Yes</option>
             </select>
           </div>
         </div>
 
-        <div class="grid two">
-          <div class="field">
-            <label for="rush">Need rush service?</label>
-            <select id="rush">
-              <option>No</option>
-              <option>Yes</option>
-            </select>
-          </div>
-
+        <div class="grid">
           <div class="field">
             <label for="deadline">Deadline Confirmation</label>
-            <select id="deadline" required>
+            <select id="deadline" name="Deadline Confirmation" required>
               <option value="">— Select —</option>
               <option>I confirm I placed my order before the cutoff OR selected rush</option>
             </select>
@@ -432,6 +442,10 @@
         </div>
 
         <div class="grid">
+          <div id="formStatusMessage" class="status-message"></div>
+        </div>
+
+        <div class="grid">
           <div class="info-box">
             <strong>Turnaround Guidance:</strong> Our turnaround estimates begin on the next business day after your order is placed. In most cases, jobs between 1 and 4 pages are completed within 1 to 2 working days, 5 to 8 pages within 2 to 3 working days, 9 to 12 pages within 3 to 4 working days, and 13 to 16 pages within 4 to 5 working days. For larger projects over 16 pages, we will review the request and follow up by email with an estimated completion timeline.
           </div>
@@ -440,7 +454,7 @@
         <div class="grid">
           <div class="field">
             <label for="comments">Special Comments</label>
-            <textarea id="comments" rows="5"></textarea>
+            <textarea id="comments" name="Special Comments" rows="5"></textarea>
           </div>
         </div>
 
@@ -456,6 +470,13 @@
           <span>Total Amount Due</span>
           <strong>$<span id="total">0</span></strong>
         </div>
+
+        <!-- Hidden fields sent with Zelle form email -->
+        <input type="hidden" id="hiddenOrderTotal" name="Estimated Total" value="">
+        <input type="hidden" id="hiddenPaymentMethod" name="Payment Method" value="">
+        <input type="hidden" id="hiddenOrderType" name="Order Type" value="Translation Request">
+        <input type="hidden" name="_subject" value="New Translation Form Submission">
+        <input type="hidden" name="_captcha" value="false">
 
         <div class="actions">
           <button type="button" class="btn btn-primary" id="paymentButton" onclick="goToPayment()">
@@ -478,7 +499,7 @@
       </div>
 
       <div class="zelle-content">
-        <p>Please send your payment using Zelle to the email below.</p>
+        <p>Your form has been sent. Please send your payment using Zelle to the email below.</p>
 
         <div class="zelle-cta">Send $<span id="zelleTotalCta">0</span> via Zelle</div>
 
@@ -508,6 +529,7 @@
 <script>
   const STRIPE_LINK = "https://buy.stripe.com/cN2eXCfM5b5a6Ig8ww";
   const ZELLE_EMAIL = "info@dotanddashnotary.com";
+  const FORMSUBMIT_EMAIL = "info@dotanddashnotary.com";
 
   function normalizeLanguage(value) {
     return value.trim().toLowerCase().replace(/\s+/g, " ");
@@ -585,9 +607,9 @@
     }
 
     if (isEnglishSpanishPair()) {
-      paymentMessage.innerText = "Non-AITA English/Spanish translations are paid via Zelle. You will be taken to the Zelle payment screen after continuing.";
+      paymentMessage.innerText = "Non-AITA English/Spanish translations are submitted to our office first, then paid via Zelle.";
       paymentMessage.style.display = "block";
-      paymentButton.innerText = "Continue to Zelle Payment";
+      paymentButton.innerText = "Submit Form & Continue to Zelle";
       return;
     }
 
@@ -621,6 +643,7 @@
 
     if (pages < 1) {
       document.getElementById("total").innerText = "0";
+      document.getElementById("hiddenOrderTotal").value = "$0";
       return 0;
     }
 
@@ -639,6 +662,7 @@
     }
 
     document.getElementById("total").innerText = finalTotal;
+    document.getElementById("hiddenOrderTotal").value = "$" + finalTotal;
     return finalTotal;
   }
 
@@ -654,23 +678,53 @@
     el.addEventListener("change", handleFormUpdates);
   });
 
+  function showStatus(message) {
+    const box = document.getElementById("formStatusMessage");
+    box.innerText = message;
+    box.style.display = "block";
+  }
+
+  function validateCommonFields(total) {
+    if (!document.getElementById("customerName").value.trim()) {
+      alert("Please enter your full name.");
+      return false;
+    }
+
+    if (!document.getElementById("customerEmail").value.trim()) {
+      alert("Please enter your email address.");
+      return false;
+    }
+
+    if (!document.getElementById("sourceLanguage").value.trim() || !document.getElementById("targetLanguage").value.trim()) {
+      alert("Please enter both source and target languages.");
+      return false;
+    }
+
+    if (!total || total < 1) {
+      alert("Please enter a valid page count.");
+      return false;
+    }
+
+    if (!document.getElementById("deadline").value) {
+      alert("Please confirm the deadline selection.");
+      return false;
+    }
+
+    return true;
+  }
+
   function goToPayment() {
     const total = calculateTotal();
     const aitaCertified = document.getElementById("aitaCertified").value;
 
-    if (!total || total < 1) {
-      return alert("Please enter a valid page count.");
-    }
-
-    if (!document.getElementById("deadline").value) {
-      return alert("Please confirm the deadline selection.");
-    }
+    if (!validateCommonFields(total)) return;
 
     if (aitaCertified === "No" && !isEnglishSpanishPair()) {
       return alert("Non-AITA service is only available for English to Spanish and Spanish to English translations. Please select “Yes” for an AITA-certified translator to continue.");
     }
 
     if (aitaCertified === "Yes") {
+      document.getElementById("hiddenPaymentMethod").value = "Stripe";
       if (!STRIPE_LINK || STRIPE_LINK.includes("PASTE_YOUR_STRIPE_LINK_HERE")) {
         return alert("Stripe link not set yet. Paste your Stripe link into the STRIPE_LINK variable in the code.");
       }
@@ -678,7 +732,46 @@
       return;
     }
 
-    showZellePage(total);
+    document.getElementById("hiddenPaymentMethod").value = "Zelle";
+    submitZelleForm(total);
+  }
+
+  async function submitZelleForm(total) {
+    const form = document.getElementById("translationForm");
+    const formData = new FormData(form);
+    const actionUrl = "https://formsubmit.co/ajax/" + encodeURIComponent(FORMSUBMIT_EMAIL);
+
+    const paymentButton = document.getElementById("paymentButton");
+    paymentButton.disabled = true;
+    paymentButton.innerText = "Submitting...";
+
+    showStatus("Submitting your form...");
+
+    try {
+      const response = await fetch(actionUrl, {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        showZellePage(total);
+      } else {
+        paymentButton.disabled = false;
+        updatePaymentMessage();
+        showStatus("We couldn't submit your form. Please try again.");
+        alert("We couldn't submit your form. Please try again.");
+      }
+    } catch (error) {
+      paymentButton.disabled = false;
+      updatePaymentMessage();
+      showStatus("There was a network error while submitting your form. Please try again.");
+      alert("There was a network error while submitting your form. Please try again.");
+    }
   }
 
   function showZellePage(total) {
@@ -693,6 +786,9 @@
   function backToForm() {
     document.getElementById("zellePage").style.display = "none";
     document.getElementById("formWrap").style.display = "block";
+    const paymentButton = document.getElementById("paymentButton");
+    paymentButton.disabled = false;
+    updatePaymentMessage();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
