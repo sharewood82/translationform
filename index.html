@@ -283,14 +283,21 @@
     word-break:break-word;
   }
 
+  .zelle-cta{
+    margin:18px 0 8px;
+    font-size:28px;
+    font-weight:800;
+    color:var(--navy);
+  }
+
   .zelle-amount{
-    margin:14px 0 0;
+    margin:10px 0 0;
     font-size:18px;
     color:var(--navy);
   }
 
   .zelle-amount strong{
-    font-size:28px;
+    font-size:30px;
   }
 
   .zelle-memo{
@@ -472,6 +479,8 @@
 
       <div class="zelle-content">
         <p>Please send your payment using Zelle to the email below.</p>
+
+        <div class="zelle-cta">Send $<span id="zelleTotalCta">0</span> via Zelle</div>
 
         <div class="zelle-email" id="zelleEmailDisplay">info@dotanddashnotary.com</div>
 
@@ -677,6 +686,7 @@
     document.getElementById("zellePage").style.display = "block";
     document.getElementById("zelleEmailDisplay").innerText = ZELLE_EMAIL;
     document.getElementById("zelleTotal").innerText = total;
+    document.getElementById("zelleTotalCta").innerText = total;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
