@@ -20,6 +20,8 @@
     --field:#FAFBFF;
     --warn-bg:#FFF8E8;
     --warn-line:#E9D39A;
+    --zelle:#6C1CD1;
+    --zelle-hover:#5316a8;
   }
 
   *{ box-sizing:border-box; }
@@ -210,6 +212,15 @@
     color:#1b2438;
   }
 
+  .btn-secondary{
+    background:var(--zelle);
+    color:#fff;
+  }
+
+  .btn-secondary:hover{
+    background:var(--zelle-hover);
+  }
+
   .btn[disabled]{
     opacity:.55;
     cursor:not-allowed;
@@ -221,11 +232,94 @@
     font-size:13px;
     line-height:1.4;
   }
+
+  .zelle-page{
+    display:none;
+    max-width:760px;
+    margin:48px auto;
+    padding:0 18px;
+  }
+
+  .zelle-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:0 14px 40px rgba(44,58,89,.10);
+    overflow:hidden;
+  }
+
+  .zelle-header{
+    text-align:center;
+    padding:28px 24px 18px;
+    background:linear-gradient(180deg, rgba(108,28,209,.08), rgba(255,255,255,0));
+    border-bottom:1px solid var(--line);
+  }
+
+  .zelle-header img{
+    width:140px;
+    max-width:100%;
+    margin-bottom:14px;
+  }
+
+  .zelle-header h2{
+    margin:0;
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+    line-height:1.2;
+    color:var(--navy);
+    font-weight:600;
+  }
+
+  .zelle-content{
+    padding:26px 28px 30px;
+    text-align:center;
+  }
+
+  .zelle-email{
+    margin:18px 0 8px;
+    font-size:24px;
+    font-weight:800;
+    color:var(--navy);
+    word-break:break-word;
+  }
+
+  .zelle-amount{
+    margin:14px 0 0;
+    font-size:18px;
+    color:var(--navy);
+  }
+
+  .zelle-amount strong{
+    font-size:28px;
+  }
+
+  .zelle-memo{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  .zelle-actions{
+    display:grid;
+    gap:10px;
+    margin-top:22px;
+  }
+
+  .success-message{
+    display:none;
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:10px;
+    background:#eef6ff;
+    border:1px solid #c8dbf7;
+    color:var(--navy);
+    font-size:14px;
+  }
 </style>
 </head>
 
 <body>
-  <div class="wrap">
+  <div class="wrap" id="formWrap">
     <div class="card">
       <div class="branding">
         <h1>Dot &amp; Dash Mobile Notary</h1>
@@ -369,9 +463,42 @@
     </div>
   </div>
 
+  <div class="zelle-page" id="zellePage">
+    <div class="zelle-card">
+      <div class="zelle-header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Zelle_logo.svg" alt="Zelle Logo">
+        <h2>Zelle Payment</h2>
+      </div>
+
+      <div class="zelle-content">
+        <p>Please send your payment using Zelle to the email below.</p>
+
+        <div class="zelle-email" id="zelleEmailDisplay">info@dotanddashnotary.com</div>
+
+        <div class="zelle-amount">
+          Total to send:<br>
+          <strong>$<span id="zelleTotal">0</span></strong>
+        </div>
+
+        <div class="zelle-memo">
+          Include your name and “Translation Order” in the payment memo.
+        </div>
+
+        <div class="zelle-actions">
+          <button type="button" class="btn btn-secondary" onclick="copyZelleEmail()">Copy Zelle Email</button>
+          <button type="button" class="btn btn-primary" onclick="backToForm()">Back to Form</button>
+        </div>
+
+        <div class="success-message" id="copySuccessMessage">
+          Zelle email copied to clipboard.
+        </div>
+      </div>
+    </div>
+  </div>
+
 <script>
   const STRIPE_LINK = "https://buy.stripe.com/cN2eXCfM5b5a6Ig8ww";
-  const ZELLE_LINK = "https://YOUR-ZELLE-PAYMENT-PAGE-LINK-HERE";
+  const ZELLE_EMAIL = "info@dotanddashnotary.com";
 
   function normalizeLanguage(value) {
     return value.trim().toLowerCase().replace(/\s+/g, " ");
@@ -449,7 +576,7 @@
     }
 
     if (isEnglishSpanishPair()) {
-      paymentMessage.innerText = "Non-AITA English/Spanish translations are paid via Zelle. You will be taken to the Zelle payment page after continuing.";
+      paymentMessage.innerText = "Non-AITA English/Spanish translations are paid via Zelle. You will be taken to the Zelle payment screen after continuing.";
       paymentMessage.style.display = "block";
       paymentButton.innerText = "Continue to Zelle Payment";
       return;
@@ -542,11 +669,33 @@
       return;
     }
 
-    if (!ZELLE_LINK || ZELLE_LINK.includes("YOUR-ZELLE-PAYMENT-PAGE-LINK-HERE")) {
-      return alert("Zelle payment page link not set yet. Paste your Zelle page link into the ZELLE_LINK variable in the code.");
-    }
+    showZellePage(total);
+  }
 
-    window.location.href = ZELLE_LINK;
+  function showZellePage(total) {
+    document.getElementById("formWrap").style.display = "none";
+    document.getElementById("zellePage").style.display = "block";
+    document.getElementById("zelleEmailDisplay").innerText = ZELLE_EMAIL;
+    document.getElementById("zelleTotal").innerText = total;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function backToForm() {
+    document.getElementById("zellePage").style.display = "none";
+    document.getElementById("formWrap").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function copyZelleEmail() {
+    navigator.clipboard.writeText(ZELLE_EMAIL).then(() => {
+      const msg = document.getElementById("copySuccessMessage");
+      msg.style.display = "block";
+      setTimeout(() => {
+        msg.style.display = "none";
+      }, 2500);
+    }).catch(() => {
+      alert("Copy failed. Please manually copy: " + ZELLE_EMAIL);
+    });
   }
 
   handleFormUpdates();
